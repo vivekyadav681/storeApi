@@ -1,4 +1,7 @@
 package com.spring.storeapi.repositories;
 
-public interface ProfileRepository {
+import com.spring.storeapi.entities.Profile;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ProfileRepository extends CrudRepository<Profile, Long> {
 }
