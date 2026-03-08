@@ -5,6 +5,7 @@ import com.spring.storeapi.dtos.ChangePasswordRequest;
 import com.spring.storeapi.dtos.RegisterUserRequest;
 import com.spring.storeapi.dtos.UpdateUserRequest;
 import com.spring.storeapi.dtos.UserDto;
+import com.spring.storeapi.entities.Role;
 import com.spring.storeapi.entities.User;
 import com.spring.storeapi.mappers.UserMapper;
 import com.spring.storeapi.repositories.UserRepository;
@@ -64,7 +65,7 @@ public class UserController {
            return ResponseEntity.badRequest().body(Map.of("email", "Email is already in use"));
         var user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
+        user.setRole(Role.USER);
         userRepository.save(user);
         var userDto = userMapper.toDto(user);
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(userDto.getId()).toUri();

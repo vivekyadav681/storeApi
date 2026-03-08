@@ -10,4 +10,6 @@ spring:
   jpa:
     show-sql: true
   jwt:
-    secret: oWK4zm2H61VIsl0k43YYsanKws2GafffxoIrD7RUn3V6SKWb0VIwjWI8KkvNK8qd/NLnazER2RBHujUkfLC0XA==
+    secret: ${JWT_SECRET:oWK4zm2H61VIsl0k43YYsanKws2GafffxoIrD7RUn3V6SKWb0VIwjWI8KkvNK8qd/NLnazER2RBHujUkfLC0XA==}
+    accessTokenExpiration: 900 # 5 minutes
+    refreshTokenExpiration: 604800 # 7 days
