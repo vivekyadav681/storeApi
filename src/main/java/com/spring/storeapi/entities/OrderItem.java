@@ -3,10 +3,13 @@ package com.spring.storeapi.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
+
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -39,4 +42,11 @@ public class OrderItem {
     private BigDecimal totalPrice;
 
 
+    public OrderItem(Order order, Product product, Integer quantity) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.unitPrice = product.getPrice();
+        this.totalPrice = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+    }
 }

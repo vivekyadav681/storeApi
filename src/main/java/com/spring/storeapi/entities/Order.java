@@ -1,5 +1,6 @@
 package com.spring.storeapi.entities;
 
+import com.spring.storeapi.services.AuthService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -40,8 +41,28 @@ public class Order {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private Set<OrderItem> Items = new LinkedHashSet<>();
+
+    public static Order fromCart(Cart cart, User customer) {
+        var order = new Order();
+        order.setTotalPrice(cart.getTotalPrice());
+        order.setStatus(OrderStatus.PENDING);
+        order.setCustomer(customer);
+
+        cart.getCartItems().forEach(cartItem -> {
+            var orderItem = new OrderItem(order, cartItem.getProduct(), cartItem.getQuantity());
+            order.Items.add(orderItem);
+
+        });
+
+        return order;
+
+    }
+
+    public boolean isPlacedBy(User customer) {
+        this.customer.equals(customer);
+    }
 
 
 }
